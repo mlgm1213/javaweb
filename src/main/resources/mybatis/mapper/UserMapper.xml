@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTDMapper3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.springboot.mapper.UserMapper">
+    <select id="login" resultType="user">
+        select * from busertable where user_name = #{user_name} and user_pwd = #{user_pwd}
+    </select>
+
+    <insert id="register" parameterType="user">
+        insert into busertable values(#{id}, #{user_name}, #{email}, #{user_pwd}, #{real_name}, #{sex}, #{mobile}, #{company}, #{province}, #{hobby})
+    </insert>
+</mapper>
