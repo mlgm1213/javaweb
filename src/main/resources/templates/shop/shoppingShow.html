@@ -86,7 +86,7 @@
     <div class="middle">
         <h1 class="pic_title">最新上架</h1>
         <div class="pic_list" id="pic_list">
-            <dl th:each="goods:${#request.getAttribute('goodsList')}">
+            <dl th:each="goods:${#request.getAttribute('goodsList').list}">
                 <div>
                     <a th:href="@{/shop/toDetail/(gname=${goods.gname}, gid=${goods.id}, gpicture=${goods.gpicture}, amount=${goods.goprice})}" target="_blank">
                     <img th:src="@{/shop/images/shopshow/{gpicture}(gpicture=${goods.gpicture})}" width="150" height="180"/></a>

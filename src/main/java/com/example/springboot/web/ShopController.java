@@ -4,6 +4,8 @@ import com.example.springboot.entity.Goods;
 import com.example.springboot.entity.User;
 import com.example.springboot.mapper.OrderMapper;
 import com.example.springboot.mapper.ShopMapper;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -30,7 +32,6 @@ public class ShopController {
     public String findByType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer type = Integer.valueOf(request.getParameter("type"));
         Integer page = Integer.valueOf(request.getParameter("page"));
-        System.out.println(type+page);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (user != null){
@@ -39,8 +40,11 @@ public class ShopController {
             request.setAttribute("gpictureList", gpictureList);
         }
 
+        PageHelper.startPage(page, 8);
         List<Goods> goodsList = shopMapper.findByType(type);
-        request.setAttribute("goodsList", goodsList);
+        PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
+        request.setAttribute("goodsList", pageInfo);
+        System.out.println(pageInfo);
         return "shop/shoppingShow";
 //        request.setAttribute("goodsList", goodsList);
 //        request.getRequestDispatcher("/shop/shoppingShow.html").forward(request, response);
