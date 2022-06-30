@@ -2,7 +2,7 @@ package com.example.springboot.web;
 
 
 import com.example.springboot.entity.Order;
-import com.example.springboot.service.AdminOrderService;
+import com.example.springboot.mapper.AdminOrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,23 +17,14 @@ import java.util.List;
 @RequestMapping("/adminOrder")
 public class AdminOrderController{
     @Autowired
-    private AdminOrderService adminOrderService;
+    private AdminOrderMapper adminOrderMapper;
 
     @RequestMapping("/selectOrder")
     public void selectGoods(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        List<Order> orderList = adminOrderService.selectOrder();
+        List<Order> orderList = adminOrderMapper.selectOrder();
         System.out.println(orderList);
         request.setAttribute("orderList", orderList);
-        request.getRequestDispatcher("/manageadmin/orderlist.jsp").forward(request, response);
+        request.getRequestDispatcher("/manageadmin/orderlist.html").forward(request, response);
     }
-
-//    @RequestMapping("/orderInfo")
-//    public String orderInfo(Model model) {
-//        return adminOrderService.orderInfo(model);
-//    }
-//    @RequestMapping("/deleteorderManager")
-//    public String deleteorderManager(Integer id) {
-//        return adminOrderService.deleteorderManager(id);
-//    }
 }

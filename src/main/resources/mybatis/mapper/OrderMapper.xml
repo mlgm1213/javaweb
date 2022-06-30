@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yszl.mapper.OrderMapper">
+<mapper namespace="com.example.springboot.mapper.OrderMapper">
 
     <insert id="placeOrder" parameterType="order">
         insert into orderbasetable values (#{id}, #{busertable_id}, #{amount}, #{orderdate}, #{goodstable_id})

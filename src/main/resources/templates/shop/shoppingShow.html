@@ -1,42 +1,31 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" isELIgnored="false" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%
-    String path = request.getRequestURI();
-    String basePath = request.getScheme() + "://"
-            + request.getServerName() + ":" + request.getServerPort()
-            + path;
-%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="<%=basePath%>">
 
     <title>漫步时尚广场-购物列表</title>
-    <link href="css/show.css" rel="stylesheet" type="text/css">
+    <link href="/shop/css/show.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <!--顶部区域 start-->
 <div class="top_bg">
     <div class="top_content">
-        <div class="floatl"><img src="images/star.jpg">收藏 | HI，欢迎来订购 ！
-            <c:choose>
-                <c:when test="${sessionScope.user!=null}">
-                    <span class="orange">[${sessionScope.user.user_name}]</span>
-                    <a href="/user/exit" class="orange"> [注销]</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="../register/login.jsp" class="orange">[请登录]</a>
-                    <a href="../register/register.html" class="orange"> [免费注册]</a>
-                </c:otherwise>
-            </c:choose>
+        <div class="floatl"><img src="/shop/images/star.jpg">
+            <td class="padding-top">
+                <img src="/shop/images/star.jpg">收藏 | HI，欢迎来订购 ！
+                <span th:if="${#session ne null and #session.getAttribute('user') ne null}" th:text="'['+${#session.getAttribute('user').user_name+']'}" class="orange">[用户名]</span>
+                <a th:if="${#session ne null and #session.getAttribute('user') ne null}" href="/user/exit" class="orange"> [注销]</a>
+                <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/login.html" class="orange">[请登录]</a>
+                <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/register.html" class="orange"> [免费注册]</a>
+            </td>
         </div>
         <c:if test="${sessionScope.user!=null}">
-            <div class="floatr">客户服务<img src="images/arrow.gif">&nbsp;网站导航<img src="images/arrow.gif">&nbsp;
+            <div class="floatr">客户服务<img src="/shop/images/arrow.gif">&nbsp;网站导航<img src="/shop/images/arrow.gif">&nbsp;
                 <div class="xl">
                     <div class="droparrow "><span class="shopcart"></span>我的购物车<span class="orange">0</span>件<img
-                            src="images/arrow.gif"/></div>
+                            src="/shop/images/arrow.gif"/></div>
                     <!--下拉菜单-->
                     <div class="dropdown">
                         <ul class="shop_pic">
@@ -53,7 +42,7 @@
 <!--顶部区域 end-->
 <div class="clear"></div>
 <!--logo和banner start-->
-<div class="logo"><a href="../index.jsp"><img src="images/logo.jpg"></a><img src="images/banner.jpg" class="floatr ">
+<div class="logo"><a href="../index.jsp"><img src="/shop/images/logo.jpg"></a><img src="/shop/images/banner.jpg" class="floatr ">
 </div>
 <!--logo和banner  end-->
 
@@ -61,7 +50,7 @@
 <div class="nav_bg">
     <div class="nav_content">
         <ul class="nav">
-            <li><a href="shoppingIndex.jsp" class="white">首页</a></li>
+            <li><a href="shoppingIndex.html" class="white">首页</a></li>
             <li class="nav_active"><a href="shoppingShow.jsp" class="white">最新上架</a></li>
             <li>品牌活动</li>
             <li>原厂直供</li>
@@ -96,20 +85,18 @@
     <!--中间区 start-->
     <div class="middle">
         <h1 class="pic_title">最新上架</h1>
-        <div class="pic_list">
-            <c:forEach items="${goodsList}" var="goods">
-                <dl>
-                    <div>
-                        <a href="/shop/toDetail?gname=${goods.gname}&gid=${goods.id}&gpicture=${goods.gpicture}&amount=${goods.goprice}" target="_blank">
-                        <img src="images/shopshow/${goods.gpicture}" width="150" height="180"/></a>
-                    </div>
-                    <dt>
-                        <span class="price">￥${goods.grprice}元</span>
-                        <span class="font12">${goods.sale_num}人购买</span>
-                    </dt>
-                    <dd>${goods.gname}</dd>
-                </dl>
-            </c:forEach>
+        <div class="pic_list" id="pic_list">
+            <dl th:each="goods:${#request.getAttribute('goodsList')}">
+                <div>
+                    <a th:href="@{/shop/toDetail/(gname=${goods.gname}, gid=${goods.id}, gpicture=${goods.gpicture}, amount=${goods.goprice})}" target="_blank">
+                    <img th:src="@{/shop/images/shopshow/{gpicture}(gpicture=${goods.gpicture})}" width="150" height="180"/></a>
+                </div>
+                <dt>
+                    <span class="price" th:text="'￥'+${goods.grprice}+'元'">价格</span>
+                    <span class="font12" th:text="${goods.sale_num}+'人购买'">购买人数</span>
+                </dt>
+                <dd th:text="${goods.gname}">商品名称</dd>
+            </dl>
         </div>
     </div>
 </div>
@@ -125,11 +112,11 @@
     <div class="gotop"></div>
     <div class="foot_title">
         <ul class="foot_pic">
-            <li><img src="images/gray1.jpg"></li>
-            <li><img src="images/gray2.jpg"></li>
-            <li><img src="images/gray3.jpg"></li>
-            <li><img src="images/gray4.jpg"></li>
-            <li><img src="images/gray5.jpg"></li>
+            <li><img src="/shop/images/gray1.jpg"></li>
+            <li><img src="/shop/images/gray2.jpg"></li>
+            <li><img src="/shop/images/gray3.jpg"></li>
+            <li><img src="/shop/images/gray4.jpg"></li>
+            <li><img src="/shop/images/gray5.jpg"></li>
         </ul>
     </div>
     <ul class="foot_list">
@@ -215,10 +202,57 @@
     <div class="foot_line"></div>
     <p align="center" class="padding-top">Copyright 2015-2020 Q- Walking Fashion E&S 漫步时尚广场（QST教育）版权所有<Br/>
         中国青岛 高新区河东路8888号 青软教育集团 咨询热线：400-658-0166 400-658-1022 </p>
-    <p align="center"><img src="images/foot_pic.jpg"></p>
+    <p align="center"><img src="/shop/images/foot_pic.jpg"></p>
     <div class="clear"></div>
 </div>
 
 <!--底部 end-->
 </body>
+<script src="/js/jquery-3.2.1.min.js"></script>
+<!--<script type="text/javascript">-->
+<!--    var initData = function (currentPage) {-->
+<!--        var cp = {-->
+<!--            page: currentPage,-->
+<!--            type: 1-->
+<!--        };-->
+<!--        $.ajax({-->
+<!--            type: "get",-->
+<!--            url: "/shop/findByType",-->
+<!--            dataType: "json",-->
+<!--            data: cp,-->
+<!--            success: function (response) {-->
+<!--                // 重置gridBody中内容-->
+<!--                // $("#gridBody").empty();-->
+<!--                for (let i in response) {-->
+<!--                    let good = response[i];-->
+<!--                    $("#pic_list").append(""+good.gname+""+good.id+"<dl><div><a href=\"/shop/toDetail?gname=&gid=&gpicture=&amount=\" target=\"_blank\"><img src="+good.gpicture+""+good.goprice+""+good.gpicture+"\"images/shopshow\" width=\"150\" height=\"180\"/></a></div><dt><span class=\"price\">"+good.grprice+"元</span><span class=\"font12\">"+good.sale_num+"人购买</span></dt><dd>"+good.gname+"</dd></dl>")-->
+<!--                }-->
+<!--                //-->
+<!--                // if (data.list.length < data.pageSize) {-->
+<!--                //     for (var i = 0; i < data.pageSize - data.list.length; i++) {-->
+<!--                //         $("#gridBody").append("<tr><td>&nbsp;</td><td></td><td></td><td></td><td></td></tr>");-->
+<!--                //     }-->
+<!--                // }-->
+<!--                //-->
+<!--                // var pageNum = "";-->
+<!--                //-->
+<!--                // for (var i = 1; i <= data.pages; i++) {-->
+<!--                //     if (i == currentPage) {-->
+<!--                //         pageNum += i + "&nbsp;";-->
+<!--                //     } else {-->
+<!--                //         pageNum += "<a href='javascript:initData(" + i + ")'>" + i + "</a>" + "&nbsp;";-->
+<!--                //     }-->
+<!--                //-->
+<!--                // }-->
+<!--                //-->
+<!--                // $("#pager").html("共" + data.total + "条记录&nbsp;共" + data.pages + "页&nbsp;" + pageNum);-->
+<!--            }-->
+<!--        });-->
+<!--    };-->
+
+<!--    $(function () {-->
+<!--        // 初始化数据，1代码第一页-->
+<!--        initData(1);-->
+<!--    })-->
+<!--</script>-->
 </html>

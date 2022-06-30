@@ -1,7 +1,7 @@
 package com.example.springboot.web;
 
 import com.example.springboot.entity.User;
-import com.example.springboot.service.UserService;
+import com.example.springboot.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,36 +17,37 @@ import java.io.IOException;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserMapper userMapper;
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public void login(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String login(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String user_name = request.getParameter("user_name");
         String user_pwd = request.getParameter("user_pwd");
         System.out.println(user_name+" "+user_pwd);
-        User user = userService.login(user_name, user_pwd);
+        User user = userMapper.login(user_name, user_pwd);
 //        System.out.println(user);
 
         if (user != null){
             HttpSession session = request.getSession();
             session.setAttribute("user", user);
-            response.sendRedirect("/shop/shoppingIndex.jsp");
+//            response.sendRedirect("/shop/shoppingIndex.html");
             System.out.println(user_name+"登录成功");
+            return "shop/shoppingIndex";
         }
         else{
-            System.out.println("登录失败");
+            return "register/login";
         }
     }
 
     @RequestMapping(value = "/exit")
-    public void exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String exit(HttpServletRequest request, HttpServletResponse response) throws IOException {
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("/shop/shoppingIndex.jsp");
+        return "shop/shoppingIndex";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public void register(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String register(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String userName = request.getParameter("userName");
         String email = request.getParameter("email");
         String userPwd = request.getParameter("userPwd");
@@ -68,10 +69,11 @@ public class UserController {
         user.setProvince(province);
         user.setHobby(hobby);
         System.out.println(user);
-        userService.register(user);
+        userMapper.register(user);
 
         HttpSession session = request.getSession();
         session.setAttribute("user", user);
-        response.sendRedirect("/shop/shoppingIndex.jsp");
+//        response.sendRedirect("/shop/shoppingIndex.html");
+        return "shop/shoppingIndex";
     }
 }

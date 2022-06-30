@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.yszl.mapper.AdminGoodsMapper">
+<mapper namespace="com.example.springboot.mapper.AdminGoodsMapper">
     <!-- 查询商品 -->
     <select id="selectGoods"  resultType="Goods">
         select * from goodstable order by create_time desc

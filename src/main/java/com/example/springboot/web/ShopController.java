@@ -2,12 +2,13 @@ package com.example.springboot.web;
 
 import com.example.springboot.entity.Goods;
 import com.example.springboot.entity.User;
-import com.example.springboot.service.OrderService;
-import com.example.springboot.service.ShopService;
+import com.example.springboot.mapper.OrderMapper;
+import com.example.springboot.mapper.ShopMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -21,37 +22,33 @@ import java.util.List;
 public class ShopController {
 
     @Autowired
-    private ShopService shopService;
+    private ShopMapper shopMapper;
     @Autowired
-    private OrderService orderService;
-
-    @RequestMapping(value = "/1", produces = "text/html;charset=UTF-8")
-    @ResponseBody
-    public String test(){
-        shopService.test();
-        return "ok成功";
-    }
+    private OrderMapper orderMapper;
 
     @RequestMapping("/findByType")
-    public void findByType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String findByType(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Integer type = Integer.valueOf(request.getParameter("type"));
         Integer page = Integer.valueOf(request.getParameter("page"));
+        System.out.println(type+page);
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
         if (user != null){
             Integer uid = user.getId();
-            List<String> gpictureList = orderService.findCart(uid);
+            List<String> gpictureList = orderMapper.findCart(uid);
             request.setAttribute("gpictureList", gpictureList);
         }
 
-        List<Goods> goodsList = shopService.findByType(type, page);
+        List<Goods> goodsList = shopMapper.findByType(type);
         request.setAttribute("goodsList", goodsList);
-        request.getRequestDispatcher("/shop/shoppingShow.jsp").forward(request, response);
+        return "shop/shoppingShow";
+//        request.setAttribute("goodsList", goodsList);
+//        request.getRequestDispatcher("/shop/shoppingShow.html").forward(request, response);
     }
 
-    @RequestMapping("/toDetail")
-    public void toDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String gname = new String(request.getParameter("gname").getBytes("iso-8859-1"), "utf-8");
+    @GetMapping("/toDetail")
+    public String toDetail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String gname = request.getParameter("gname");
         Integer gid = Integer.valueOf(request.getParameter("gid"));
         String gpicture = request.getParameter("gpicture");
         Double amount = Double.valueOf(request.getParameter("amount"));
@@ -61,7 +58,8 @@ public class ShopController {
         session.setAttribute("gid", gid);
         request.setAttribute("gpicture", gpicture);
         session.setAttribute("amount", amount);
-//        response.sendRedirect("/shop/shoppingDetail.jsp");
-        request.getRequestDispatcher("/shop/shoppingDetail.jsp").forward(request, response);
+//        response.sendRedirect("/shop/shoppingDetail.html");
+        return "shop/shoppingDetail";
+//        request.getRequestDispatcher("/shop/shoppingDetail.html").forward(request, response);
     }
 }

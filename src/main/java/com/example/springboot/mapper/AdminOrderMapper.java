@@ -1,6 +1,8 @@
 package com.example.springboot.mapper;
 
 import com.example.springboot.entity.Order;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
@@ -9,7 +11,8 @@ import java.util.List;
  * @author：Sakana
  * @date： 2022-06-16 17:16
  */
-
+@Component
+@Mapper
 public interface AdminOrderMapper {
 
     public List<Order> selectOrder();
