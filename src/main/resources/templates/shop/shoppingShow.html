@@ -80,11 +80,15 @@
         <li><span class="red_dot"></span><a href="/shop/findByType?type=4&page=1">运动衫</a><span class="right_arrow"></span></li>
         <li><span class="red_dot"></span><a href="/shop/findByType?type=4&page=1">运动裤</a><span class="right_arrow"></span></li>
         <li><span class="red_dot"></span><a href="/shop/findByType?type=4&page=1">跑步鞋</a><span class="right_arrow"></span></li>
+        <a href="/shop/findByType?type=1&page=1">&nbsp;&nbsp;上一页</a>
+        <a href="/shop/findByType?type=1&page=2">&nbsp;&nbsp;下一页</a>
     </ul>
     <!--购物分类end-->
     <!--中间区 start-->
     <div class="middle">
-        <h1 class="pic_title">最新上架</h1>
+        <h1 class="pic_title">
+            最新上架
+        </h1>
         <div class="pic_list" id="pic_list">
             <dl th:each="goods:${#request.getAttribute('goodsList').list}">
                 <div>
@@ -101,13 +105,15 @@
     </div>
 </div>
 <div>
-    <a href="/shop/findByType?type=1&page=1">上一页</a>
-<%--    第&nbsp;2&nbsp;页--%>
-    <a href="/shop/findByType?type=1&page=2">下一页</a>
+    <form action="searchByName" method="post">
+        <input name="search_content" type="text" style="height: 35px; margin-left: 10px; font-size: medium"/>
+        <input type="submit" name="button" value="搜索" style="height: 35px; width: 50px; color: #ffffff; background-color: #ff9c01; border-color: #ff6600; margin-bottom: 500px"/>
+    </form>
 </div>
 <!--中间部分 end-->
 <!--底部 start-->
-<div class="clear"></div>
+<div class="clear">
+</div>
 <div class="footer">
     <div class="gotop"></div>
     <div class="foot_title">

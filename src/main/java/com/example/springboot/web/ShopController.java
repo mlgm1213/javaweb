@@ -44,10 +44,20 @@ public class ShopController {
         List<Goods> goodsList = shopMapper.findByType(type);
         PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
         request.setAttribute("goodsList", pageInfo);
-        System.out.println(pageInfo);
         return "shop/shoppingShow";
 //        request.setAttribute("goodsList", goodsList);
 //        request.getRequestDispatcher("/shop/shoppingShow.html").forward(request, response);
+    }
+
+    @RequestMapping("/searchByName")
+    public String searchByName(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String search_content = request.getParameter("search_content");
+
+        PageHelper.startPage(1, 8);
+        List<Goods> goodsList = shopMapper.searchByName('%'+search_content+'%');
+        PageInfo<Goods> pageInfo = new PageInfo<>(goodsList);
+        request.setAttribute("goodsList", pageInfo);
+        return "shop/shoppingShow";
     }
 
     @GetMapping("/toDetail")
