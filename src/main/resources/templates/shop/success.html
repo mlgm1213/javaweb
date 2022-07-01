@@ -1,11 +1,11 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN""http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <base href="<%=basePath%>">
 
     <title>操作成功</title>
-    <link href="../../static/shop/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/shop/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 <!--顶部区域 start-->
@@ -14,21 +14,16 @@
         <td bgcolor="#f7f7f7">
             <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center">
                 <tr>
-                    <td class="padding-top"><img src="../../static/shop/images/star.jpg">收藏 | HI，欢迎来订购 ！
-                        <c:choose>
-                            <c:when test="${sessionScope.user!=null}">
-                                <span class="orange">[${sessionScope.user.user_name}]</span>
-                                <a href="/user/exit" class="orange"> [注销]</a>
-                            </c:when>
-                            <c:otherwise>
-                                <a href="../../static/register/login.html" class="orange">[请登录]</a>
-                                <a href="../../static/register/register.html" class="orange"> [免费注册]</a>
-                            </c:otherwise>
-                        </c:choose>
+                    <td class="padding-top">
+                        <img src="/shop/images/star.jpg">收藏 | HI，欢迎来订购 ！
+                        <span th:if="${#session ne null and #session.getAttribute('user') ne null}" th:text="'['+${#session.getAttribute('user').user_name+']'}" class="orange">[用户名]</span>
+                        <a th:if="${#session ne null and #session.getAttribute('user') ne null}" href="/user/exit" class="orange"> [注销]</a>
+                        <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/login.html" class="orange">[请登录]</a>
+                        <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/register.html" class="orange"> [免费注册]</a>
                     </td>
-                    <td align="right"> 客户服务<img src="../../static/shop/images/arrow.gif">&nbsp;网站导航<img src="../../static/shop/images/arrow.gif">&nbsp;<span
+                    <td align="right"> 客户服务<img src="/shop/images/arrow.gif">&nbsp;网站导航<img src="/shop/images/arrow.gif">&nbsp;<span
                             class="droparrow"><span class="shopcart"></span>我的购物车<span class="orange">0</span>件<img
-                            src="../../static/shop/images/arrow.gif"/></span></td>
+                            src="/shop/images/arrow.gif"/></span></td>
                 </tr>
             </table>
         </td>
@@ -38,8 +33,8 @@
 <!--logo和banner start-->
 <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center">
     <tr>
-        <td height="95"><a href="../index.jsp"><img src="../../static/shop/images/logo.jpg"></a></td>
-        <td align="right"><img src="../../static/shop/images/banner.jpg"></td>
+        <td height="95"><a href="../index.jsp"><img src="/shop/images/logo.jpg"></a></td>
+        <td align="right"><img src="/shop/images/banner.jpg"></td>
     </tr>
 </table>
 <table width="100%" border="0" cellspacing="0" cellpadding="0" bgcolor="#ce2626">
@@ -74,12 +69,12 @@
                 <tr>
                     <td valign="top">
                         <h2 align="center">操作成功</h2>
-                        <a href="shoppingIndex.html" style="display:inline-block; width:600px; text-align:center; font-size: large;">点击跳转至首页</a>
+                        <a href="/shop/shoppingIndex.html" style="display:inline-block; width:600px; text-align:center; font-size: large;">点击跳转至首页</a>
                         <hr width="90%" align="center" color="#ccc"/>
 
                     </td>
                     <td width="420" rowspan="2" valign="middle">
-                        <img src="../../static/register/images/zhuce_pic.jpg" align="right"/>
+                        <img src="/register/images/zhuce_pic.jpg" align="right"/>
                     </td>
                 </tr>
             </table>
@@ -87,9 +82,9 @@
             <table width="1000" border="0" cellspacing="0" cellpadding="0" align="center" bgcolor="#FFFFFF"
                    class="padding-bottom">
                 <tr>
-                    <td align="center"><a href="#"><img src="../../static/register/images/shop.jpg" class="bian"/></a></td>
-                    <td align="center"><a href="#"><img src="../../static/register/images/movie.jpg" class="bian"/></a></td>
-                    <td align="center"><a href="#"><img src="../../static/register/images/food.jpg" class="bian"/></a></td>
+                    <td align="center"><a href="#"><img src="/register/images/shop.jpg" class="bian"/></a></td>
+                    <td align="center"><a href="#"><img src="/register/images/movie.jpg" class="bian"/></a></td>
+                    <td align="center"><a href="#"><img src="/register/images/food.jpg" class="bian"/></a></td>
                 </tr>
             </table>
         </td>
@@ -104,7 +99,7 @@
         <td bgcolor="#efefef" align="center" class="padding-top">Copyright 2015-2020 Q- Walking Fashion E&S
             漫步时尚广场（QST教育）版权所有<Br/>
             中国青岛 高新区河东路8888号 青软教育集团 咨询热线：400-658-0166 400-658-1022<br/>
-            <img src="../../static/register/images/foot_pic.jpg"></td>
+            <img src="/register/images/foot_pic.jpg"></td>
     </tr>
 </table>
 </body>

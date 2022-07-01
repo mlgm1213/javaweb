@@ -103,8 +103,12 @@
                     </h1>
                     <img src="/shop/images/showdetail/cnm.jpg"/>
                 </div>
-                <input name="order" id="order" type="submit" value="立即购买" style="width: 110px; height: 40px; background-color: #ff9c01; color: #ffffff; border-color: #ffffff"/>
-                <input name="like" id="like" type="submit" value="加入购物车" style="width: 140px; height: 40px; background-color: #ff6600; color: #ffffff; border-color: #ffffff"/>
+                <form action="/order/placeOrder">
+                    <input name="order" id="order" type="submit" value="立即购买" style="width: 110px; height: 40px; background-color: #ff9c01; color: #ffffff; border-color: #ffffff"/>
+                </form>
+                <form action="/order/addCart">
+                    <input name="like" id="like" type="submit" value="加入购物车" style="width: 140px; height: 40px; background-color: #ff6600; color: #ffffff; border-color: #ffffff"/>
+                </form>
                 <div class="clear"></div>
                 <ul class="tab">
                     <li class="tab_active">商品详情</li>
@@ -386,30 +390,30 @@
 </body>
 <script src="/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript">
-    $("#order").on("click", function () {
-        $.ajax({
-            type: "get",
-            url: "/order/placeOrder",
-            success:function (){
-                console.log("我又行了")
-            }
-        })
-    })
-
-    $("#like").on("click", function () {
-        var aname = $("#aname").val();
-        var apwd = $("#apwd").val();
-        $.ajax({
-            type: "post",
-            url: "/admin/login",
-            contentType: "application/json",
-            data: JSON.stringify({"aname": aname, "apwd": apwd}),
-            success:function (response){
-                if (response == "登录成功"){
-                    location.href = "../manageadmin/main.html"
-                }
-            }
-        })
-    })
+    // $("#order").on("click", function () {
+    //     $.ajax({
+    //         type: "get",
+    //         url: "/order/placeOrder",
+    //         success:function (){
+    //             console.log("我又行了")
+    //         }
+    //     })
+    // })
+    //
+    // $("#like").on("click", function () {
+    //     var aname = $("#aname").val();
+    //     var apwd = $("#apwd").val();
+    //     $.ajax({
+    //         type: "post",
+    //         url: "/admin/login",
+    //         contentType: "application/json",
+    //         data: JSON.stringify({"aname": aname, "apwd": apwd}),
+    //         success:function (response){
+    //             if (response == "登录成功"){
+    //                 location.href = "../manageadmin/main.html"
+    //             }
+    //         }
+    //     })
+    // })
 </script>
 </html>
