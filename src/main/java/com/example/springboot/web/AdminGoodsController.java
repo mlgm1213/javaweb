@@ -15,36 +15,36 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-/**
- * @version 1.0
- * @author：Sakana
- * @date： 2022-06-16 13:15
- */
 @Controller
 @RequestMapping("/admin")
 public class AdminGoodsController {
 
     @Autowired
     private AdminGoodsMapper adminGoodsMapper;
+
     SimpleDateFormat ft = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @RequestMapping(value = "/addGoods", method = RequestMethod.POST)
-    public void addGoods(Goods goods, HttpServletResponse response) throws IOException {
+    public String addGoods(Goods goods, HttpServletResponse response) throws IOException {
         Date create_time = new Date();
         goods.setCreate_time(ft.format(create_time.getTime()));
         goods.setSale_num(0);
-        System.out.println(goods);
 
+        System.out.println(goods);
         adminGoodsMapper.addGoods(goods);
-        response.sendRedirect("/admin/selectGoods");
+
+        return "manageadmin/addgoods";
+//        response.sendRedirect("/admin/selectGoods");
     }
 
     @RequestMapping("/selectGoods")
-    public void selectGoods(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String selectGoods(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 //        Integer type = Integer.valueOf(request.getParameter("type"));
         List<Goods> goodsList = adminGoodsMapper.selectGoods();
         System.out.println(goodsList);
         request.setAttribute("goodsList", goodsList);
-        request.getRequestDispatcher("/manageadmin/shoplist.jsp").forward(request, response);
+
+        return "manageadmin/shoplist";
+//        request.getRequestDispatcher("/manageadmin/shoplist.jsp").forward(request, response);
     }
 }

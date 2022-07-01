@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+﻿<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>餐饮列表页面-后台管理</title>
-<link href="css/layout.css" rel="stylesheet" type="text/css" />
-<link href="css/list.css" rel="stylesheet" type="text/css" />
+<title>后台管理</title>
+<link href="/manageadmin/css/layout.css" rel="stylesheet" type="text/css" />
+<link href="/manageadmin/css/list.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div class="place"> <span>位置：</span>
@@ -13,23 +13,22 @@
     <li><a href="#">购物后台管理</a></li>
     <li><a href="#">商品列表</a></li>
   </ul>
-  <div class="date_text"><img src="images/leftico04.png">&nbsp;今天是2015年2月10日 星期一 12：00</div>
+  <div class="date_text"><img src="/manageadmin/images/leftico04.png">&nbsp;今天是2015年2月10日 星期一 12：00</div>
 </div>
 <div class="rightinfo">
   <div class="tools">
     <ul class="toolbar">
-      <li ><span><img src="images/t01.png" /></span>添加</li>
-      <li ><span><img src="images/t02.png" /></span>修改</li>
-      <li class="click"><span><img src="images/t03.png" /></span>删除</li>
-      <li><a href="jqueryChart.html"><span><img src="images/t04.png" /></span>统计</a></li>
-      <li><span><img src="images/t05.png" /></span>设置</li>
+      <li ><span><img src="/manageadmin/images/t01.png" /></span>添加</li>
+      <li ><span><img src="/manageadmin/images/t02.png" /></span>修改</li>
+      <li class="click"><span><img src="/manageadmin/images/t03.png" /></span>删除</li>
+      <li><a href="jqueryChart.html"><span><img src="/manageadmin/images/t04.png" /></span>统计</a></li>
+      <li><span><img src="/manageadmin/images/t05.png" /></span>设置</li>
     </ul>
-    <iframe src="shop_search.html" scrolling="no" frameborder="0" width="400" height="42"></iframe>
+    <iframe src="/manageadmin/shop_search.html" scrolling="no" frameborder="0" width="400" height="42"></iframe>
   </div>
   <table class="tablelist">
     <thead>
       <tr>
-
         <th>缩略图</th>
         <th>商品名称</th>
         <th>商品类别</th>
@@ -40,17 +39,26 @@
       </tr>
     </thead>
     <tbody>
-      <c:forEach items="${goodsList}" var="goods">
-          <tr>
-            <td class="imgtd"><img width="100" height="75" src="../../shop/images/shopshow/${goods.gpicture}" /></td>
-            <td>${goods.gname}</td>
-            <td>${goods.goodstype_id}</td>
-            <td>${goods.gstore}</td>
-            <td>${goods.goprice}</td>
-            <td>${goods.grprice}</td>
-            <td>${goods.create_time}</td>
+
+<!--            <tr th:each="goods:${#request.getAttribute('goodsList').list}">-->
+<!--            <img th:src="@{/shop/images/shopshow/{gpicture}(gpicture=${goods.gpicture})}" width="100" height="75"/></a>-->
+<!--            <td th:text="${goods.gname}">商品名称</td>-->
+<!--            <td th:text="${goods.goodstype_id}">商品类别</td>-->
+<!--            <td th:text="${goods.gstore}">库存(件）</td>-->
+<!--            <td th:text="${goods.goprice}">商品单价（元）</td>-->
+<!--            <td th:text="${goods.grprice}">团购价（元）</td>-->
+<!--            <td th:text="${goods.create_time}">发布时间</td>-->
+
+<!--            <td class="imgtd"><img width="100" height="75" src="../../shop/images/shopshow/${goods.gpicture}" /></td>-->
+<!--            <td>${goods.gname}</td>-->
+<!--            <td>${goods.goodstype_id}</td>-->
+<!--            <td>${goods.gstore}</td>-->
+<!--            <td>${goods.goprice}</td>-->
+<!--            <td>${goods.grprice}</td>-->
+<!--            <td>${goods.create_time}</td>-->
+
           </tr>
-      </c:forEach>
+
     </tbody>
   </table>
   <div class="pagin">

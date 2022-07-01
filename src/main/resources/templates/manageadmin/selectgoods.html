@@ -1,5 +1,7 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
   <head>
 <link href="../css/admin/common.css" type="text/css" rel="stylesheet">
 <link href="../css/list.css" rel="stylesheet" type="text/css" />
@@ -44,10 +46,10 @@
 
 
 
-    <c:if test="${allGoods.size() == 0 }">
-        您还没有商品。
-    </c:if>
-    <c:if test="${allGoods.size() != 0 }">
+<!--    <c:if test="${allGoods.size() == 0 }">-->
+<!--        您还没有商品。-->
+<!--    </c:if>-->
+<!--    <c:if test="${allGoods.size() != 0 }">-->
         <table border="1" bordercolor="PaleGreen">
             <thead>
                 <th width="100px">ID</th>
@@ -56,39 +58,46 @@
                 <th width="100px">库存</th>
                 <th width="200px">详情</th>
             </thead>
-            <c:forEach items="${allGoods }" var="goods">
-                <tr onmousemove="changeColor(this)" onmouseout="changeColor1(this)">
-                    <td>${goods.id }</td>
-                    <td>${goods.gname }</td>
-                    <td>${goods.grprice }</td>
-                    <td>${goods.gstore }</td>
-                    <td><a href="adminGoods/selectAGoods?id=${goods.id }" target="_blank">详情</a>
-                    <a href="adminGoods/selectAGoods?id=${goods.id }&act=updateAgoods" target="center" >修改</a>
-                    <a href="adminGoods/selectGoods?act=deleteSelect" target="center">删除</a>
+<!--                <c:forEach items="${allGoods }" var="goods">-->
+<!--                    <tr onmousemove="changeColor(this)" onmouseout="changeColor1(this)">-->
+<!--                        <td>${goods.id }</td>-->
+<!--                        <td>${goods.gname }</td>-->
+<!--                        <td>${goods.grprice }</td>-->
+<!--                        <td>${goods.gstore }</td>-->
+<!--                        <td><a href="adminGoods/selectAGoods?id=${goods.id }" target="_blank">详情</a>-->
+<!--                        <a href="adminGoods/selectAGoods?id=${goods.id }&act=updateAgoods" target="center" >修改</a>-->
+<!--                        <a href="adminGoods/selectGoods?act=deleteSelect" target="center">删除</a>-->
 
-                    </td>
+<!--                        </td>-->
 
-                </tr>
-            </c:forEach>
+<!--                    </tr>-->
+<!--                </c:forEach>-->
+                <dl th:each="goods:${#request.getAttribute('goodsList').list}">
+                    <dt>
+                        <span class="price" th:text="'￥'+${goods.grprice}+'元'">价格</span>
+                        <span class="font12" th:text="${goods.sale_num}+'人购买'">购买人数</span>
+                    </dt>
+                    <dd th:text="${goods.gname}">商品名称</dd>
+                </dl>
             <tr border="1">
                 <td colspan="5" align="right">
                     &nbsp;&nbsp;&nbsp;
                     &nbsp;&nbsp;&nbsp;共${totalCount}条记录&nbsp;&nbsp;共${totalPage}页&nbsp;&nbsp;
                     第${pageCur}页&nbsp;&nbsp;
-                    <c:url var="url_pre" value="adminGoods/selectGoods">
-                        <c:param name="pageCur" value="${pageCur - 1 }"/>
-                    </c:url>
-                    <c:url var="url_next" value="adminGoods/selectGoods">
-                        <c:param name="pageCur" value="${pageCur + 1 }"/>
-                    </c:url>
-                    <!-- 第一页没有上一页 -->
-                    <c:if test="${pageCur != 1 }">
-                        <a href="${url_pre}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                    </c:if>
-                    <!-- 最后一页，没有下一页 -->
-                    <c:if test="${pageCur != totalPage && totalPage != 0}">
-                        <a href="${url_next}">下一页</a>
-                    </c:if>
+<!--                    <c:url var="url_pre" value="adminGoods/selectGoods">-->
+<!--                        <c:param name="pageCur" value="${pageCur - 1 }"/>-->
+<!--                    </c:url>-->
+<!--                    <c:url var="url_next" value="adminGoods/selectGoods">-->
+<!--                        <c:param name="pageCur" value="${pageCur + 1 }"/>-->
+<!--                    </c:url>-->
+<!--                    &lt;!&ndash; 第一页没有上一页 &ndash;&gt;-->
+<!--                    <c:if test="${pageCur != 1 }">-->
+<!--                        <a href="${url_pre}">上一页</a>&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                    </c:if>-->
+<!--                    &lt;!&ndash; 最后一页，没有下一页 &ndash;&gt;-->
+<!--                    <c:if test="${pageCur != totalPage && totalPage != 0}">-->
+<!--                        <a href="${url_next}">下一页</a>-->
+<!--                    </c:if>-->
                 </td>
             </tr>
         </table>
