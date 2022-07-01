@@ -12,4 +12,6 @@ public interface ShopMapper {
 
     public List<Goods> findByType(Integer type);
 
+    public List<Goods> searchByName(String search_content);
+
 }

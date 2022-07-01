@@ -3,27 +3,28 @@ package com.example.springboot.web;
 import com.example.springboot.entity.Auser;
 import com.example.springboot.mapper.AuserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
-@RestController
+@Controller
 @RequestMapping("/admin")
 public class AuserController {
 
     @Autowired
     private AuserMapper auserMapper;
 
-    @PostMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(@RequestBody Auser auser) throws IOException {
         Auser auser1 = auserMapper.login(auser.getAname(), auser.getApwd());
-        System.out.println(auser1);
 
         if(auser1 != null){
-            return "登录成功";
+            System.out.println(auser1.getAname()+"登录成功");
+            return "manageadmin/main";
         }
         else {
-            return "登录失败";
+            return "manageadmin/login";
         }
     }
 

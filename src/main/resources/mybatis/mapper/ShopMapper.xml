@@ -4,4 +4,8 @@
     <select id="findByType" resultType="goods" parameterType="int">
         select * from goodstable where goodstype_id = #{type} order by create_time desc
     </select>
+
+    <select id="searchByName" resultType="goods" parameterType="string">
+        select * from goodstable where gname like #{gname} ORDER BY create_time DESC
+    </select>
 </mapper>
