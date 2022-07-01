@@ -48,7 +48,15 @@
 <!--            <td th:text="${goods.goprice}">商品单价（元）</td>-->
 <!--            <td th:text="${goods.grprice}">团购价（元）</td>-->
 <!--            <td th:text="${goods.create_time}">发布时间</td>-->
-
+                <tr th:each="goods:${goodsList}">
+                  <td class="imgtd"><img th:src="@{/shop/images/shopshow/{gpicture}(gpicture=${goods.gpicture})}" width="100" height="75"/></td>
+                  <td th:text="${goods.gname}">商品名称</td>
+                  <td th:text="${goods.goodstype_id}">商品类别</td>
+                  <td th:text="${goods.gstore}">库存(件）</td>
+                  <td th:text="${goods.goprice}">商品单价（元）</td>
+                  <td th:text="${goods.grprice}">团购价（元）</td>
+                  <td th:text="${goods.create_time}">发布时间</td>
+                </tr>
 <!--            <td class="imgtd"><img width="100" height="75" src="../../shop/images/shopshow/${goods.gpicture}" /></td>-->
 <!--            <td>${goods.gname}</td>-->
 <!--            <td>${goods.goodstype_id}</td>-->
@@ -57,7 +65,7 @@
 <!--            <td>${goods.grprice}</td>-->
 <!--            <td>${goods.create_time}</td>-->
 
-          </tr>
+<!--          </tr>-->
 
     </tbody>
   </table>
