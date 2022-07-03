@@ -15,5 +15,10 @@ public interface OrderMapper {
     public void addCart(Order order);
 
     public List<String> findCart(Integer uid);
+
+    public List<Order> findOrder(Integer uid);
+
+    public void confirm(Integer id);
+
 }
 

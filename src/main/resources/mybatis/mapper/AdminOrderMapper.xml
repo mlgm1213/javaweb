@@ -5,7 +5,7 @@
 <mapper namespace="com.example.springboot.mapper.AdminOrderMapper">
     <!-- 查询订单 -->
     <select id="selectOrder"  resultType="Order">
-        select * from orderbasetable
+        select * from ordertable
 <!--        order by create_time desc-->
     </select>
 </mapper>

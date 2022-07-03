@@ -4,8 +4,19 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.springboot.mapper.OrderMapper">
 
+    <resultMap id="orderMap" type="order">
+        <id column="id" property="id"></id>
+        <result column="busertable_id" property="busertable_id"></result>
+        <result column="goodstable_id" property="goodstable_id"></result>
+        <result column="amount" property="amount"></result>
+        <result column="orderdate" property="orderdate"></result>
+        <result column="status" property="status"></result>
+        <result column="gname" property="goods.gname"></result>
+        <result column="gpicture" property="goods.gpicture"></result>
+    </resultMap>
+
     <insert id="placeOrder" parameterType="order">
-        insert into orderbasetable values (#{id}, #{busertable_id}, #{amount}, #{orderdate}, #{goodstable_id})
+        insert into ordertable values (#{id}, #{busertable_id}, #{amount}, #{orderdate}, #{goodstable_id})
     </insert>
 
     <insert id="addCart" parameterType="order">
@@ -16,4 +27,11 @@
         select gpicture from carttable c, goodstable g where g.id = c.goodstable_id and c.busertable_id = #{uid}
     </select>
 
+    <select id="findOrder" parameterType="int" resultMap="orderMap">
+        SELECT ordertable.*,gname,gpicture FROM ordertable, goodstable WHERE busertable_id = #{uid} and ordertable.goodstable_id = goodstable.id order by orderdate desc
+    </select>
+
+    <update id="confirm" parameterType="int">
+        UPDATE ordertable SET status = '已收货' WHERE id = #{id}
+    </update>
 </mapper>

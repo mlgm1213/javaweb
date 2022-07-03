@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+    <title>我的订单</title>
+    <link href="/shop/css/style.css" rel="stylesheet" type="text/css">
+    <link href="/shop/css/new.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<!--顶部区域 start-->
+<table width="100%" border="0" cellspacing="0" cellpadding="0" class="top_line">
+    <tr>
+        <td bgcolor="#f7f7f7">
+            <table width="1200" border="0" cellspacing="0" cellpadding="0" align="center">
+                <tr>
+                    <td class="padding-top">
+                        <img src="/shop/images/star.jpg">收藏 | HI，欢迎来订购 ！
+                        <span th:if="${#session ne null and #session.getAttribute('user') ne null}" th:text="'['+${#session.getAttribute('user').user_name+']'}" class="orange">[用户名]</span>
+                        <a th:if="${#session ne null and #session.getAttribute('user') ne null}" href="/user/exit" class="orange"> [注销]</a>
+                        <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/login.html" class="orange">[请登录]</a>
+                        <a th:if="${#session eq null or #session.getAttribute('user') eq null}" href="../register/register.html" class="orange"> [免费注册]</a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<!--顶部区域 end-->
+<!--logo和banner start-->
+<table width="1200" border="0" cellspacing="0" cellpadding="0" align="center">
+    <tr>
+        <td height="95"><a href="../index.jsp"><img src="/shop/images/logo.jpg"></a></td>
+        <td align="right"><img src="/shop/images/banner.jpg"></td>
+    </tr>
+</table>
+
+<!--菜单导航 end-->
+<div class="order_nav">
+    <div width="100"><a href="">所有订单</a></div>
+    <div width="100"><a href="">待付款</a></div>
+    <div width="100"><a href="">待发货</a></div>
+    <div width="100"><a href="">待收货</a></div>
+    <div width="100"><a href="">待评价</a></div>
+</div>
+<table width="80%" bgcolor="#f8f8f8" align="center" cellspacing="10">
+    <tr class="order_title">
+        <td width="100" align="center">下单日期</td>
+        <td width="100" align="center">订单号</td>
+        <td width="100" align="center">缩略图</td>
+        <td width="100" align="center">商品名称</td>
+        <td width="100" align="center">单价</td>
+        <td width="100" align="center">数量</td>
+        <td width="100" align="center">交易状态</td>
+        <td width="100" align="center">交易操作</td>
+    </tr>
+
+    <tr th:each="order:${#request.getAttribute('orderList')}" class="order_list" width="80%" align="center">
+        <td th:text="${order.orderdate}" width="100" align="center">2022-7-3</td>
+        <td th:text="${order.id}" width="100" align="center">25</td>
+        <td width="100" align="center">
+            <img th:src="@{/shop/images/shopshow/{gpicture}(gpicture=${order.goods.gpicture})}" width="100" height="75" >
+        </td>
+        <td th:text="${order.goods.gname}" width="100" align="center">韩国短袖t恤女夏季2022新款大码女装纯棉宽松上衣</td>
+        <td th:text="${order.amount}" width="100" align="center">88.0</td>
+        <td width="100" align="center">1</td>
+        <td th:text="${order.status}" width="100" align="center">已发货</td>
+        <td th:switch="${order.status}" width="100" align="center">
+            <a th:case="待收货" th:href="@{/order/confirm/(id=${order.id})}">确认收货</a>
+            <a th:case="已收货" href="">去评价</a>
+            <a th:case="已评价" href="">追加评价</a>
+            <a th:case="待发货" href="">催促物流</a>
+        </td>
+    </tr>
+</table>
+
+</body>
+</html>

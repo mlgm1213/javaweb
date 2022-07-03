@@ -14,5 +14,7 @@ public class Order {
     private Integer goodstable_id;
     private Double amount;
     private String orderdate;
+    private String status;
+    private Goods goods;
 
 }
