@@ -71,6 +71,7 @@ public class ShopController {
         session.setAttribute("gid", gid);
         request.setAttribute("gpicture", gpicture);
         session.setAttribute("amount", amount);
+        session.setAttribute("gname", gname);
 //        response.sendRedirect("/shop/shoppingDetail.html");
         return "shop/shoppingDetail";
 //        request.getRequestDispatcher("/shop/shoppingDetail.html").forward(request, response);
